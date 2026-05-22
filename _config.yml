@@ -1,11 +1,29 @@
 title: Yogesh Blog
 description: Notes, essays, and build logs by Yogesh.
 url: https://yogesh1801.github.io
-theme: minima
-plugins:
-  - jekyll-feed
 author: Yogesh
+timezone: Asia/Kolkata
 markdown: kramdown
 permalink: /:year/:month/:day/:title/
+show_excerpts: true
+theme: minima
 header_pages:
   - about.md
+  - archive.md
+  - tags.md
+
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-sitemap
+
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: post
+
+minima:
+  social_links:
+    rss: feed.xml

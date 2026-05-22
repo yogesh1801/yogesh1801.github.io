@@ -1,70 +1,81 @@
 # yogesh1801.github.io
 
-This repository is set up for a simple blog on GitHub Pages using Jekyll and a GitHub Actions deployment workflow.
+A simple blog on GitHub Pages — Jekyll + minima theme, deployed via GitHub Actions.
 
-## Why this setup
-
-- Free hosting on GitHub Pages
-- Write posts in Markdown
-- No local Ruby setup required to publish
-- Easy to keep everything in git
-
-## Publish it
-
-1. Create a GitHub repository.
-2. Name the repository `yogesh1801.github.io`.
-3. Push these files to the `main` branch.
-4. In GitHub, open `Settings` -> `Pages`.
-5. Under `Build and deployment`, set `Source` to `GitHub Actions`.
-6. Wait for the workflow to finish.
-
-Your site URL will be:
-
-`https://yogesh1801.github.io/`
-
-## Push commands
+## Write a new post
 
 ```bash
-cd /home/yogesh/Desktop/blog
+./scripts/new-post.sh "My post title"
+```
+
+This creates `_posts/YYYY-MM-DD-my-post-title.md` with front matter filled in. Edit the file, commit, push — GitHub Actions builds and deploys.
+
+For a draft (won't be published until moved to `_posts/`):
+
+```bash
+./scripts/new-post.sh "Half-baked idea" --draft
+```
+
+## Publish
+
+```bash
 git add .
-git commit -m "Initial blog setup"
-git remote add origin https://github.com/yogesh1801/yogesh1801.github.io.git
-git push -u origin main
+git commit -m "Add post: my title"
+git push
 ```
 
-## Write a post
+The site rebuilds automatically. Watch progress in the repo's **Actions** tab. Live at:
 
-Create a file in `_posts/` named like:
+https://yogesh1801.github.io/
 
-`YYYY-MM-DD-title.md`
+## What's in the box
 
-Example front matter:
+- **`_posts/`** — published posts (`YYYY-MM-DD-slug.md`)
+- **`_drafts/`** — unpublished drafts (no date prefix)
+- **`_includes/header.html`** — site header with theme toggle
+- **`_includes/head.html`** — `<head>` with SEO tags
+- **`scripts/new-post.sh`** — scaffolds a post or draft
+- **`archive.md`** → `/archive/` — all posts grouped by year
+- **`tags.md`** → `/tags/` — posts grouped by tag
+- **`about.md`** → `/about/` — about page
+- **`_config.yml`** — site settings
+- **`.github/workflows/deploy.yml`** — build + deploy on push to `main`
 
-```md
----
-layout: post
-title: "My New Post"
-date: 2026-05-23 09:00:00 +0530
-categories: notes
----
+## Plugins enabled
 
-Write in Markdown here.
-```
+- `jekyll-feed` — RSS at `/feed.xml`
+- `jekyll-seo-tag` — `<title>`, OG, Twitter cards
+- `jekyll-sitemap` — `/sitemap.xml`
+
+All three are on the GitHub Pages whitelist, so they build without a Gemfile.
+
+## First-time setup (already done)
+
+If you ever start fresh:
+
+1. Create a repo named `<username>.github.io`.
+2. Push these files to `main`.
+3. In **Settings → Pages**, set **Source** to **GitHub Actions**.
 
 ## Edit site details
 
-Update these values in `_config.yml`:
+Update in `_config.yml`:
 
-- `title`
-- `description`
-- `author`
+- `title` — site title
+- `description` — used by SEO + RSS
+- `author` — your name
+- `url` — full https URL to the site
+- `timezone` — IANA timezone (e.g. `Asia/Kolkata`)
 
-## When to prefer something else
+## Local preview (optional)
 
-Prefer something else if you want:
+You don't need this to publish, but if you want to preview locally:
 
-- A visual editor and admin dashboard
-- Built-in newsletters, members, or payments
-- Comments/search/analytics without adding extra services
+```bash
+gem install bundler jekyll
+bundle init
+bundle add jekyll jekyll-feed jekyll-seo-tag jekyll-sitemap
+bundle exec jekyll serve --drafts
+```
 
-For that, Ghost or Hashnode is usually easier than GitHub Pages.
+Open http://localhost:4000. The `--drafts` flag includes `_drafts/` in the build.
