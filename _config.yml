@@ -1,0 +1,11 @@
+title: Yogesh Blog
+description: Notes, essays, and build logs by Yogesh.
+url: https://yogesh1801.github.io
+theme: minima
+plugins:
+  - jekyll-feed
+author: Yogesh
+markdown: kramdown
+permalink: /:year/:month/:day/:title/
+header_pages:
+  - about.md
